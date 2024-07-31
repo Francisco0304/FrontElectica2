@@ -1,0 +1,77 @@
+<div class="navbar">
+  <a href="/menu-manual-admins">INICIO</a>
+</div>
+<div class="sidebar">
+  <h4 class="text-white">Menú</h4>
+  <a href="/menu-practicas">Prácticas</a>
+  <a href="/menu-docentes">Docentes</a>
+  <a href="/menu-empresas">Empresas</a>
+  <a href="/menu-estudiantes">Estudiantes</a>
+</div>
+<div class="content">
+  <h2>Gestión de Prácticas</h2>
+
+  <!-- Información de las prácticas de un docente -->
+  <div class="section" id="practicas-docente">
+    <h3>Información de las Prácticas de un Docente</h3>
+    <form>
+      <label for="docenteId">Número de Identificación del Docente:</label>
+      <input type="number" id="docenteId" [(ngModel)]="docenteId" name="docenteId" required>
+      <button type="button" (click)="buscarPracticasDocente()">Buscar</button>
+    </form>
+    <div id="docente-practicas-info">
+      <p *ngIf="mensaje">{{ mensaje }}</p>
+      <table *ngIf="practicasDocente && practicasDocente.length">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Destino</th>
+          <th>Fecha de Salida</th>
+          <th>Fecha de Regreso</th>
+          <th>Docente</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let practica of practicasDocente">
+          <td>{{ practica.id }}</td>
+          <td>{{ practica.destino }}</td>
+          <td>{{ practica.fechaSalida | date }}</td>
+          <td>{{ practica.fechaRegreso | date }}</td>
+          <td>{{ practica.docente.nombre }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Listado de estudiantes por ID de práctica -->
+  <div class="section" id="estudiantes-practica">
+    <h3>Listado de Estudiantes por ID de Práctica</h3>
+    <form>
+      <label for="practicaId">ID de Práctica:</label>
+      <input type="number" id="practicaId" [(ngModel)]="practicaId" name="practicaId" required>
+      <button type="button" (click)="buscarEstudiantesPractica()">Buscar</button>
+    </form>
+    <!-- Mostrar el mensaje -->
+    <div id="estudiantes-practica-info">
+      <p *ngIf="mensaje">{{ mensaje }}</p>
+      <!-- Mostrar los datos en la tabla si hay resultados -->
+      <div class="table-container" *ngIf="estudiantesPractica.length > 0">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Número de Identificación</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let estudiante of estudiantesPractica">
+            <td>{{ estudiante.nombre }}</td>
+            <td>{{ estudiante.numeroIdentificacion || 'N/A' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
